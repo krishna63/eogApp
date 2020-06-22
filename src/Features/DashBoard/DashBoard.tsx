@@ -1,18 +1,18 @@
-import React from 'react';
-import { Box, makeStyles } from '@material-ui/core';
-import { useSelector } from 'react-redux';
-import MetricDropDown from '../../components/MetricDropDown';
-import MetricCard from '../../components/MetricCard';
-import MetricChart from '../../components/MetricChart';
-import { Provider } from 'urql';
-import client from '../../common/client';
-import { IState } from '../../store';
+import React from "react";
+import { Box, makeStyles } from "@material-ui/core";
+import { useSelector } from "react-redux";
+import { Provider } from "urql";
+import MetricDropDown from "../../components/MetricDropDown";
+import MetricCard from "../../components/MetricCard";
+import MetricChart from "../../components/MetricChart";
+import client from "../../common/client";
+import { IState } from "../../store";
 
 const useStyles = makeStyles((theme) => ({
   root: {
     width: 400,
     marginRight: theme.spacing(6),
-    '& > * + *': {
+    "& > * + *": {
       marginTop: theme.spacing(6),
     },
   },
@@ -44,7 +44,7 @@ const DashBoard: React.FC = () => {
         <Box p={1} display="flex" flexWrap="wrap" flexGrow={1}>
           {selectedMetricsList &&
             selectedMetricsList.length > 0 &&
-            selectedMetricsList[0] !== '' &&
+            selectedMetricsList[0] !== "" &&
             selectedMetricsList.map((echSelMetric: string, metricIndex: number) => {
               return <MetricCard key={metricIndex} metricName={echSelMetric} />;
             })}
@@ -54,7 +54,7 @@ const DashBoard: React.FC = () => {
         </Box>
       </Box>
       <Box bgcolor="background.paper" component="div" p={3} className={classes.graph__Root}>
-        {selectedMetricsList && selectedMetricsList.length > 0 && selectedMetricsList[0] !== '' && (
+        {selectedMetricsList && selectedMetricsList.length > 0 && selectedMetricsList[0] !== "" && (
           <MetricChart chartsForMetrics={[...selectedMetricsList]} />
         )}
       </Box>

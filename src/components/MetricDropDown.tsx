@@ -1,11 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { actions } from '../Features/DashBoard/reducer';
-import { TextField } from '@material-ui/core';
-import Autocomplete from '@material-ui/lab/Autocomplete';
-import { useQuery } from 'urql';
-import { IState } from '../store';
-console.log(actions);
+import React, { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { TextField } from "@material-ui/core";
+import Autocomplete from "@material-ui/lab/Autocomplete";
+import { useQuery } from "urql";
+import { actions } from "../Features/DashBoard/reducer";
 
 const query = `
 query {
@@ -27,25 +25,17 @@ export type Metric = {
   value: string;
 };
 
-const setMetricsList = (state: IState) => {
-  const { selectedMetricsList } = state.dashboard;
-  return {
-    selectedMetricsList,
-  };
-};
-
 const MetricDropDown = (props: any) => {
   const dispatch = useDispatch();
-  // const [metricList, setMetricsList] = useState<Array<Metric>>([]);
   const [metricList, setMetricsList] = useState<Array<string>>([]);
   const [selectedMetrics, setSelectedMetrics] = useState<Array<string>>([]);
   const [result] = useQuery({
     query,
   });
-  const [metricResults, reexecuteQuery] = useQuery({
+  const [metricResults] = useQuery({
     query: getSelectedMetricQuery,
     variables: {
-      a: 'waterTemp',
+      a: "waterTemp",
     },
     pause: true,
   });
@@ -53,14 +43,14 @@ const MetricDropDown = (props: any) => {
   const { fetching: selMetFetching, data: selData, error: selDataError } = metricResults;
   useEffect(() => {
     if (error) {
-      //dispatch(actions.weatherApiErrorReceived({ error: error.message }));
+      // dispatch(actions.weatherApiErrorReceived({ error: error.message }));
       return;
     }
     if (!data) return;
     const { getMetrics } = data;
 
     setMetricsList([...getMetrics]);
-    //dispatch(actions.weatherDataRecevied(getWeatherForLocation));
+    // dispatch(actions.weatherDataRecevied(getWeatherForLocation));
   }, [dispatch, data, error]);
 
   useEffect(() => {
@@ -74,9 +64,8 @@ const MetricDropDown = (props: any) => {
       onChange={(event: any, choosenMetrics: Array<string>) => {
         const filteredMetrics = metricList.filter((eachMetric) => choosenMetrics.indexOf(eachMetric) === -1);
         setSelectedMetrics([...filteredMetrics]);
-        //const test: string[] = ["waterTemp"];
+        // const test: string[] = ["waterTemp"];
         dispatch(actions.userSelectedMetrics({ selectedMetricsList: choosenMetrics }));
-        //reexecuteQuery();
       }}
       options={selectedMetrics.length ? selectedMetrics : metricList}
       getOptionLabel={(option) => option}

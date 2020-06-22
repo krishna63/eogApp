@@ -1,7 +1,7 @@
-import React, { useEffect, useState, useMemo } from 'react';
-import { useQuery } from 'urql';
-//import { useDispatch } from 'react-redux';
-import { LineChart, Line, Label, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
+import React, { useEffect, useState, useMemo } from "react";
+import { useQuery } from "urql";
+// import { useDispatch } from 'react-redux';
+import { LineChart, Line, Label, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from "recharts";
 
 const getAllMeticChartData = `
   query ($input: [MeasurementQuery]) {
@@ -54,14 +54,14 @@ const MetricChart = (props: any) => {
 
   useEffect(() => {
     if (error) {
-      //dispatch(actions.weatherApiErrorReceived({ error: error.message }));
+      // dispatch(actions.weatherApiErrorReceived({ error: error.message }));
       return;
     }
     if (!data) return;
 
     setGraphData(data.getMultipleMeasurements);
   }, [error, data, chartsForMetrics]);
-  const colors = ['#8884d8', '#82ca9d', '#ffc658', '#d0ed57', '#83a6ed', '#8884d8'];
+  const colors = ["#8884d8", "#82ca9d", "#ffc658", "#d0ed57", "#83a6ed", "#8884d8"];
   return (
     <>
       {graphData.length > 0 && (
@@ -80,7 +80,7 @@ const MetricChart = (props: any) => {
             name="time"
             scale="time"
             type="number"
-            domain={['auto', 'auto']}
+            domain={["auto", "auto"]}
             interval="preserveStartEnd"
             tick={<CustomizedAxisTick />}
           />
@@ -93,7 +93,7 @@ const MetricChart = (props: any) => {
             );
           })}
 
-          <Tooltip cursor={{ strokeDasharray: '3 3' }} />
+          <Tooltip cursor={{ strokeDasharray: "3 3" }} />
           <Legend />
           {graphData.map((eachMetric, graphIndex) => {
             return (

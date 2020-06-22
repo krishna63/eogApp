@@ -10,6 +10,8 @@ module.exports = {
   extends: [
     'airbnb',
     'plugin:prettier/recommended', // Enables eslint-plugin-prettier and displays prettier errors as ESLint errors. Make sure this is always the last configuration in the extends array.
+    "plugin:@typescript-eslint/recommended",
+    'eslint-config-prettier',
   ],
   globals: {
     Atomics: 'readonly',
@@ -22,9 +24,12 @@ module.exports = {
     ecmaVersion: 2018,
     sourceType: 'module',
   },
-  plugins: ['react'],
+  plugins: ['react', 'prettier'],
   rules: {
     quotes: ['error', 'double'],
+    'react/jsx-filename-extension': 'off',
+    'import/extensions': 'off',
+    'import/no-unresolved': ['off', { ignore: ['\.ts$', '\.tsx$'] }],
     '@typescript-eslint/no-angle-bracket-type-assertion': 'off',
   },
 };

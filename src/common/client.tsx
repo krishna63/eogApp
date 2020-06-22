@@ -1,10 +1,11 @@
-import { createClient, defaultExchanges, subscriptionExchange } from 'urql';
-import { devtoolsExchange } from '@urql/devtools';
-import { SubscriptionClient } from 'subscriptions-transport-ws';
-const subscriptionClient = new SubscriptionClient('wss://react.eogresources.com/graphql', { reconnect: true });
+import { createClient, defaultExchanges, subscriptionExchange } from "urql";
+import { devtoolsExchange } from "@urql/devtools";
+import { SubscriptionClient } from "subscriptions-transport-ws";
+
+const subscriptionClient = new SubscriptionClient("wss://react.eogresources.com/graphql", { reconnect: true });
 
 const client = createClient({
-  url: 'https://react.eogresources.com/graphql',
+  url: "https://react.eogresources.com/graphql",
   exchanges: [
     devtoolsExchange,
     ...defaultExchanges,
