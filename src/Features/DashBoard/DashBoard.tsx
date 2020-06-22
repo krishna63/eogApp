@@ -17,14 +17,14 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   graph__Root: {
-    marginTop: theme.spacing(0)
-  }
-}))
+    marginTop: theme.spacing(0),
+  },
+}));
 
 const getMetricsList = (state: IState) => {
   const { selectedMetricsList } = state.dashboard;
   return {
-    selectedMetricsList
+    selectedMetricsList,
   };
 };
 export default () => {
@@ -35,42 +35,29 @@ export default () => {
   );
 };
 
-const DashBoard:React.FC = () => {
+const DashBoard: React.FC = () => {
   const classes = useStyles();
   const { selectedMetricsList } = useSelector(getMetricsList);
   return (
     <>
-      <Box display="flex"
-        component="div"
-        p={1}
-        bgcolor="background.paper"
-      >
-        <Box p={1} display="flex"
-          flexWrap="wrap"
-          flexGrow={1}
-        >
-          {selectedMetricsList && selectedMetricsList.length > 0 && selectedMetricsList[0] !== "" &&
-            selectedMetricsList.map((echSelMetric:string, metricIndex:number) => {
-              return (
-                <MetricCard 
-                  key={metricIndex}
-                  metricName={echSelMetric}
-                />
-              );
-            })
-          }
+      <Box display="flex" component="div" p={1} bgcolor="background.paper">
+        <Box p={1} display="flex" flexWrap="wrap" flexGrow={1}>
+          {selectedMetricsList &&
+            selectedMetricsList.length > 0 &&
+            selectedMetricsList[0] !== '' &&
+            selectedMetricsList.map((echSelMetric: string, metricIndex: number) => {
+              return <MetricCard key={metricIndex} metricName={echSelMetric} />;
+            })}
         </Box>
-        <Box p={1} className={classes.root}
-          flexWrap="nowrap"
-        >
-         <MetricDropDown />
-         </Box>
+        <Box p={1} className={classes.root} flexWrap="nowrap">
+          <MetricDropDown />
+        </Box>
       </Box>
       <Box bgcolor="background.paper" component="div" p={3} className={classes.graph__Root}>
-        {selectedMetricsList && selectedMetricsList.length > 0 && selectedMetricsList[0] !== "" &&
-          <MetricChart chartsForMetrics={[...selectedMetricsList]}/>
-        }
+        {selectedMetricsList && selectedMetricsList.length > 0 && selectedMetricsList[0] !== '' && (
+          <MetricChart chartsForMetrics={[...selectedMetricsList]} />
+        )}
       </Box>
     </>
-  )
-}
+  );
+};

@@ -21,7 +21,7 @@ const getSelectedMetricQuery = `
       unit
     }
   }
-`
+`;
 export type Metric = {
   title: string;
   value: string;
@@ -30,27 +30,27 @@ export type Metric = {
 const setMetricsList = (state: IState) => {
   const { selectedMetricsList } = state.dashboard;
   return {
-    selectedMetricsList
+    selectedMetricsList,
   };
 };
 
-const MetricDropDown = (props:any) => {
+const MetricDropDown = (props: any) => {
   const dispatch = useDispatch();
- // const [metricList, setMetricsList] = useState<Array<Metric>>([]);
+  // const [metricList, setMetricsList] = useState<Array<Metric>>([]);
   const [metricList, setMetricsList] = useState<Array<string>>([]);
   const [selectedMetrics, setSelectedMetrics] = useState<Array<string>>([]);
   const [result] = useQuery({
-    query
+    query,
   });
   const [metricResults, reexecuteQuery] = useQuery({
     query: getSelectedMetricQuery,
     variables: {
-      a: 'waterTemp'
+      a: 'waterTemp',
     },
-    pause: true
-  })
+    pause: true,
+  });
   const { data, error } = result;
-  const { fetching: selMetFetching, data: selData, error: selDataError} = metricResults;
+  const { fetching: selMetFetching, data: selData, error: selDataError } = metricResults;
   useEffect(() => {
     if (error) {
       //dispatch(actions.weatherApiErrorReceived({ error: error.message }));
@@ -59,14 +59,14 @@ const MetricDropDown = (props:any) => {
     if (!data) return;
     const { getMetrics } = data;
 
-    setMetricsList([...getMetrics])
+    setMetricsList([...getMetrics]);
     //dispatch(actions.weatherDataRecevied(getWeatherForLocation));
   }, [dispatch, data, error]);
 
   useEffect(() => {
     console.log(selMetFetching, selData, selDataError);
-  }, [selMetFetching, selData, selDataError ])
- 
+  }, [selMetFetching, selData, selDataError]);
+
   return (
     <Autocomplete
       multiple
@@ -75,21 +75,14 @@ const MetricDropDown = (props:any) => {
         const filteredMetrics = metricList.filter((eachMetric) => choosenMetrics.indexOf(eachMetric) === -1);
         setSelectedMetrics([...filteredMetrics]);
         //const test: string[] = ["waterTemp"];
-        dispatch(actions.userSelectedMetrics({selectedMetricsList: choosenMetrics}));
+        dispatch(actions.userSelectedMetrics({ selectedMetricsList: choosenMetrics }));
         //reexecuteQuery();
       }}
-      
       options={selectedMetrics.length ? selectedMetrics : metricList}
       getOptionLabel={(option) => option}
-      renderInput={(params) => (
-        <TextField
-          {...params}
-          variant="standard"
-          placeholder="Select ..."
-        />
-      )}
+      renderInput={(params) => <TextField {...params} variant="standard" placeholder="Select ..." />}
     />
   );
-}
+};
 
 export default MetricDropDown;

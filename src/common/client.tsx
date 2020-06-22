@@ -5,11 +5,15 @@ const subscriptionClient = new SubscriptionClient('wss://react.eogresources.com/
 
 const client = createClient({
   url: 'https://react.eogresources.com/graphql',
-  exchanges: [devtoolsExchange, ...defaultExchanges, subscriptionExchange({
+  exchanges: [
+    devtoolsExchange,
+    ...defaultExchanges,
+    subscriptionExchange({
       forwardSubscription(operation) {
-      	return subscriptionClient.request(operation);
-      }
-    })],
+        return subscriptionClient.request(operation);
+      },
+    }),
+  ],
 });
 
-export default client
+export default client;
